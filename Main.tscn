@@ -1,3 +1,47 @@
-[gd_scene format=3 uid="uid://bucsmlh87n4b4"]
+[gd_scene load_steps=7 format=3 uid="uid://bucsmlh87n4b4"]
+
+[ext_resource type="Script" path="res://Player Stuff/PlayerContoller.gd" id="1_ul7q4"]
+[ext_resource type="Texture2D" uid="uid://b8lvvprvqcbhb" path="res://Player Stuff/Animation/Anim.png" id="2_nam2j"]
+[ext_resource type="Texture2D" uid="uid://c14vqarvjf4in" path="res://TestObsticals/Wall.png" id="3_bsgji"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
+radius = 50.01
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l1cun"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_opgwy"]
+size = Vector2(197.5, 102)
 
 [node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+motion_mode = 1
+script = ExtResource("1_ul7q4")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("2_nam2j")
+
+[node name="PlayerCamera" type="Camera2D" parent="CharacterBody2D"]
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_drag_margin = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_tvq21")
+one_way_collision_margin = 36.5
+
+[node name="Wall" type="Node2D" parent="."]
+position = Vector2(470, -17)
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall"]
+texture = ExtResource("3_bsgji")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
+physics_material_override = SubResource("PhysicsMaterial_l1cun")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
+shape = SubResource("RectangleShape2D_opgwy")
+one_way_collision_margin = 55.0
+debug_color = Color(0, 0.60052, 0.696994, 0.42)
