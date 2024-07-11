@@ -17,10 +17,13 @@ size = Vector2(197.5, 102)
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("1_ul7q4")
 maxSpeed = 1000.0
-acceleration = 50.0
-gravity = 1000.0
+acceleration = 500.0
 jumpForce = 700.0
 drag = 5.0
+maxRollHoldDuration = 2.0
+minRollHoldDuration = 0.5
+maxRollDuration = 0.25
+rollSpeed = 3000.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("2_nam2j")
