@@ -20,7 +20,7 @@ maxSpeed = 1000.0
 acceleration = 50.0
 gravity = 1000.0
 jumpForce = 700.0
-drag = 0.2
+drag = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("2_nam2j")
