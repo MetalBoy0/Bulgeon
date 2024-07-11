@@ -15,8 +15,9 @@ size = Vector2(197.5, 102)
 [node name="Node2D" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-motion_mode = 1
 script = ExtResource("1_ul7q4")
+maxSpeed = 1000.0
+jumpForce = 700.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("2_nam2j")
@@ -33,7 +34,8 @@ shape = SubResource("CircleShape2D_tvq21")
 one_way_collision_margin = 36.5
 
 [node name="Wall" type="Node2D" parent="."]
-position = Vector2(470, -17)
+position = Vector2(1, 223)
+scale = Vector2(27.96, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall"]
 texture = ExtResource("3_bsgji")
@@ -42,6 +44,36 @@ texture = ExtResource("3_bsgji")
 physics_material_override = SubResource("PhysicsMaterial_l1cun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
+shape = SubResource("RectangleShape2D_opgwy")
+one_way_collision_margin = 55.0
+debug_color = Color(0, 0.60052, 0.696994, 0.42)
+
+[node name="Wall2" type="Node2D" parent="."]
+position = Vector2(-1718, -150)
+scale = Vector2(4.08, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall2"]
+texture = ExtResource("3_bsgji")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall2"]
+physics_material_override = SubResource("PhysicsMaterial_l1cun")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
+shape = SubResource("RectangleShape2D_opgwy")
+one_way_collision_margin = 55.0
+debug_color = Color(0, 0.60052, 0.696994, 0.42)
+
+[node name="Wall3" type="Node2D" parent="."]
+position = Vector2(1330, -141)
+scale = Vector2(16.6464, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Wall3"]
+texture = ExtResource("3_bsgji")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall3"]
+physics_material_override = SubResource("PhysicsMaterial_l1cun")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3/StaticBody2D"]
 shape = SubResource("RectangleShape2D_opgwy")
 one_way_collision_margin = 55.0
 debug_color = Color(0, 0.60052, 0.696994, 0.42)
