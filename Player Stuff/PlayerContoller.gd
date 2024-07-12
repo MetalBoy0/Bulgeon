@@ -49,6 +49,12 @@ func handle_attacks(delta: float):
 		if Input.is_action_pressed("roll_attack"):
 			# Count seconds that player is charging
 			currentRollHold += delta
+			
+			# Also monitor the player keypresses to find the direction of roll
+			var dir = Input.get_axis("move_left","move_right")
+			if dir:
+				# If direction isn't zero (player has pressed move key)
+				lastDir = dir
 		else:
 			isChargingAttack = false
 			
@@ -107,7 +113,6 @@ func _physics_process(delta):
 			# Update velocity
 			# Move toward increments the velocity by acceleration while also maxing it at maxSpeed
 			velocity.x = direction*min(maxSpeed, abs(velocity.x)+acceleration)
-			print("Player Velocity: ", velocity.x, " MaxSpeed: ", maxSpeed, " Current force: ", acceleration * direction * delta)
 			# Update last dir variable
 			isMoving = true
 			lastDir = direction
@@ -134,4 +139,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# Testing stuff, remove this later
+	if position.y > 1000:
+		# Reset the player if they fall off the world
+		position = Vector2(0,0)
+		velocity = Vector2(0,0)
 	pass
