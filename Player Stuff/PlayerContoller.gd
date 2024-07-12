@@ -90,6 +90,8 @@ func handle_attacks(delta: float):
 	else:
 		# This part runs if the player is currently rolling
 		velocity.x = rollSpeed * rollDirection # Set player velocity to the roll speed
+		velocity.y = 0
+		
 		currentRollDur += delta # Update roll duration
 		
 		# If player finishes roll attack
@@ -134,7 +136,7 @@ func _physics_process(delta):
 	handle_attacks(delta)
 			
 	# Gravity
-	if !is_on_floor():
+	if !is_on_floor() and !isRolling:
 		velocity.y += gravity * delta
 	move_and_slide()
 	if !isHurt:
