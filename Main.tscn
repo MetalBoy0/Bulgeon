@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c14vqarvjf4in" path="res://TestObsticals/Wall.png" id="3_bsgji"]
 [ext_resource type="Texture2D" uid="uid://hjktynu43c1q" path="res://Player Stuff/Health/Health_Bar_Under.png" id="3_mo4hd"]
 [ext_resource type="Texture2D" uid="uid://cjx7xk3la1t25" path="res://Player Stuff/Health/Health_Bar_Progress.png" id="4_umhaq"]
-[ext_resource type="Script" path="res://HealthBar.gd" id="5_d3018"]
+[ext_resource type="Script" path="res://Player Stuff/Health/HealthBar.gd" id="5_d3018"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
 radius = 50.01
@@ -22,14 +22,14 @@ script = ExtResource("1_ul7q4")
 maxHealth = 100
 hurtBox = NodePath("CollisionShape2D")
 hurtTimer = NodePath("Timer")
-maxSpeed = 1000.0
-acceleration = 500.0
-jumpForce = 700.0
+maxSpeed = 700.0
+acceleration = 400.0
+jumpForce = 600.0
 drag = 5.0
-maxRollHoldDuration = 2.0
+maxRollHoldDuration = 1.75
 minRollHoldDuration = 0.5
 maxRollDuration = 0.25
-rollSpeed = 3000.0
+rollSpeed = 5500.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("2_nam2j")

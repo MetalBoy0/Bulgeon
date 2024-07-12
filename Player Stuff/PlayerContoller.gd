@@ -149,7 +149,7 @@ func _physics_process(delta):
 func hurtByEnemy():
 	currentHealth -= 10 #enemyDamage
 	if currentHealth < 0:
-		currentHealth = maxHealth
+		get_tree().change_scene_to_file("res://Menus/Death Menu/DeathMenu.tscn")
 	isHurt = true
 	hurtTimer.start()
 	await hurtTimer.timeout
@@ -162,8 +162,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_key_pressed(KEY_ESCAPE):
-		get_tree().change_scene_to_file("res://Main Menu/MainMenu.tscn")
+	if Input.is_action_just_pressed("escape"):
+		get_tree().change_scene_to_file("res://Menus/Main Menu/MainMenu.tscn")
 	# Testing stuff, remove this later
 	if position.y > 1000:
 		# Reset the player if they fall off the world

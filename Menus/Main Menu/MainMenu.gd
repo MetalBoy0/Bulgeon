@@ -7,7 +7,7 @@ func _on_start_pressed():
 
 #Goes To Settings Scene
 func _on_settings_pressed():
-	get_tree().change_scene_to_file("res://Settings/Settings.tscn")
+	get_tree().change_scene_to_file("res://Menus/Settings/Settings.tscn")
 
 #Quits Out Of Godot
 func _on_stop_pressed():
