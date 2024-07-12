@@ -90,6 +90,8 @@ func handle_attacks(delta: float):
 	else:
 		# This part runs if the player is currently rolling
 		velocity.x = rollSpeed * rollDirection # Set player velocity to the roll speed
+		velocity.y = 0
+		
 		currentRollDur += delta # Update roll duration
 		
 		# If player finishes roll attack
@@ -134,7 +136,7 @@ func _physics_process(delta):
 	handle_attacks(delta)
 			
 	# Gravity
-	if !is_on_floor():
+	if !is_on_floor() and !isRolling:
 		velocity.y += gravity * delta
 	move_and_slide()
 	if !isHurt:
@@ -162,8 +164,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# Open the menu if player presses escape
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().change_scene_to_file("res://Main Menu/MainMenu.tscn")
+	
 	# Testing stuff, remove this later
 	if position.y > 1000:
 		# Reset the player if they fall off the world
