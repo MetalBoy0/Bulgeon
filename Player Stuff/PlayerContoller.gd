@@ -31,24 +31,24 @@ func _physics_process(delta):
 	
 	
 	if !isHurt:
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		var collision: KinematicCollision2D = move_and_collide(velocity * delta)
+		if collision:
+			if collision.get_collider().name == "Enemy":
+				hurtByEnemy()
+		#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			#hurtByEnemy(hurtBox)
-			hurtByEnemy()
-		#for area in hurtBox.get_overlapping_areas():
-			#if area.name == "hitbox":
-				#hurtByEnemy(area)
+			#hurtByEnemy(area))
 	
 #func hurtByEnemy(area):
 func hurtByEnemy():
 	currentHealth -= 10 #enemyDamage
 	if currentHealth < 0:
-		currentHealth = maxHealth
-	isHurt = true
-	hurtTimer.start()
-	await hurtTimer.timeout
-	isHurt = false
+		get_tree().change_scene_to_file("res://Menus/Death Menu/DeathMenu.tscn")
 	healthChanged.emit()
-
+	isHurt = true
+	#hurtTimer.start()
+	#await hurtTimer.timeout
+	isHurt = false
 func _ready():
 	pass # Replace with function body.
 
@@ -56,10 +56,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# Open the menu if player presses escape
-	if Input.is_key_pressed(KEY_ESCAPE):
-		get_tree().change_scene_to_file("res://Main Menu/MainMenu.tscn")
-	
+	if Input.is_action_just_pressed("escape"):
+		get_tree().change_scene_to_file("res://Menus/Main Menu/MainMenu.tscn")
 	# Testing stuff, remove this later
 	if position.y > 1000:
 		# Reset the player if they fall off the world
