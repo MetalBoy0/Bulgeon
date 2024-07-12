@@ -140,23 +140,24 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 	move_and_slide()
 	if !isHurt:
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		var collision: KinematicCollision2D = move_and_collide(velocity * delta)
+		if collision:
+			if collision.get_collider().name == "Enemy":
+				hurtByEnemy()
+		#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			#hurtByEnemy(hurtBox)
-			hurtByEnemy()
-		#for area in hurtBox.get_overlapping_areas():
-			#if area.name == "hitbox":
-				#hurtByEnemy(area)
+			#hurtByEnemy(area))
 	
 #func hurtByEnemy(area):
 func hurtByEnemy():
 	currentHealth -= 10 #enemyDamage
 	if currentHealth < 0:
 		get_tree().change_scene_to_file("res://Menus/Death Menu/DeathMenu.tscn")
-	isHurt = true
-	hurtTimer.start()
-	await hurtTimer.timeout
-	isHurt = false
 	healthChanged.emit()
+	isHurt = true
+	#hurtTimer.start()
+	#await hurtTimer.timeout
+	isHurt = false
 func _ready():
 	pass # Replace with function body.
 

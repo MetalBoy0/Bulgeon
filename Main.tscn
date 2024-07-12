@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bucsmlh87n4b4"]
+[gd_scene load_steps=12 format=3 uid="uid://bucsmlh87n4b4"]
 
 [ext_resource type="Script" path="res://Player Stuff/PlayerContoller.gd" id="1_ul7q4"]
 [ext_resource type="Texture2D" uid="uid://b8lvvprvqcbhb" path="res://Player Stuff/Animation/Anim.png" id="2_nam2j"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://hjktynu43c1q" path="res://Player Stuff/Health/Health_Bar_Under.png" id="3_mo4hd"]
 [ext_resource type="Texture2D" uid="uid://cjx7xk3la1t25" path="res://Player Stuff/Health/Health_Bar_Progress.png" id="4_umhaq"]
 [ext_resource type="Script" path="res://Player Stuff/Health/HealthBar.gd" id="5_d3018"]
+[ext_resource type="Script" path="res://Enemy.gd" id="7_soyqi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
 radius = 50.01
@@ -14,6 +15,8 @@ radius = 50.01
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_opgwy"]
 size = Vector2(197.5, 102)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7575"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -109,3 +112,14 @@ texture_progress = ExtResource("4_umhaq")
 script = ExtResource("5_d3018")
 player = NodePath("../../CharacterBody2D")
 camera = NodePath("../../CharacterBody2D/PlayerCamera")
+
+[node name="Enemy" type="CharacterBody2D" parent="."]
+position = Vector2(1000, 120)
+script = ExtResource("7_soyqi")
+
+[node name="EnemyCollider" type="CollisionShape2D" parent="Enemy"]
+scale = Vector2(10, 5)
+shape = SubResource("RectangleShape2D_p7575")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy"]
+texture = ExtResource("3_bsgji")
