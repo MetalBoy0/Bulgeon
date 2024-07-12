@@ -17,6 +17,7 @@ radius = 50.01
 size = Vector2(197.5, 102)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7575"]
+size = Vector2(20.1, 20)
 
 [node name="Node2D" type="Node2D"]
 
@@ -28,7 +29,6 @@ hurtTimer = NodePath("Timer")
 maxRollHoldDuration = 1.75
 minRollHoldDuration = 0.5
 maxRollDuration = 0.25
-rollSpeed = 5500
 groundPoundSpeed = 4000.0
 groundPoundMaxDur = 2.0
 maxSpeed = 700.0
@@ -120,8 +120,10 @@ position = Vector2(1000, 120)
 script = ExtResource("7_soyqi")
 
 [node name="EnemyCollider" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(-0.5, -7.62939e-06)
 scale = Vector2(10, 5)
 shape = SubResource("RectangleShape2D_p7575")
+one_way_collision_margin = 24.1
 
 [node name="Sprite2D" type="Sprite2D" parent="Enemy"]
 texture = ExtResource("3_bsgji")

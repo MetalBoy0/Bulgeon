@@ -15,7 +15,6 @@ var lastDir: float = 1 # The last direction the player moved, used for deciding 
 func handle_move(delta):
 	# Prevent player from moving when charging an attack or preforming an attack
 	if !isChargingAttack and !isDoingAttack:
-		print(isDoingAttack)
 		# Apply drag only if the player isn't pressing move buttons
 		if !isMoving:
 			velocity.x /= (1+drag*delta)
