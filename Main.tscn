@@ -22,14 +22,16 @@ script = ExtResource("1_ul7q4")
 maxHealth = 100
 hurtBox = NodePath("CollisionShape2D")
 hurtTimer = NodePath("Timer")
-maxSpeed = 1000.0
-acceleration = 500.0
-jumpForce = 700.0
-drag = 5.0
 maxRollHoldDuration = 2.0
 minRollHoldDuration = 0.5
 maxRollDuration = 0.25
 rollSpeed = 3000.0
+groundPoundSpeed = 4000.0
+groundPoundMaxDur = 2.0
+maxSpeed = 1000.0
+acceleration = 500.0
+jumpForce = 700.0
+drag = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("2_nam2j")
