@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://ciducktrylvd"]
+
+[ext_resource type="Script" path="res://Settings/Settings.gd" id="1_uel2v"]
+[ext_resource type="Script" path="res://Settings/Volume.gd" id="2_b3i3d"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uel2v")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 432.0
+offset_right = 528.0
+offset_bottom = 51.0
+scale = Vector2(3, 3)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Master Volume Text" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="Master Volume" type="HSlider" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_b3i3d")
+bus_name = "Master"
+
+[node name="Music Volume Text" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="Music Volume" type="HSlider" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_b3i3d")
+bus_name = "Music"
+
+[node name="Effect Volume Text" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Effect Volume"
+
+[node name="Effect Volume" type="HSlider" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_b3i3d")
+bus_name = "Effect"
+
+[node name="MainMenu" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[connection signal="changed" from="MarginContainer/VBoxContainer/Master Volume" to="." method="_on_master_volume_changed"]
+[connection signal="drag_ended" from="MarginContainer/VBoxContainer/Master Volume" to="." method="_on_master_volume_drag_ended"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]

@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bucsmlh87n4b4"]
+[gd_scene load_steps=10 format=3 uid="uid://bucsmlh87n4b4"]
 
 [ext_resource type="Script" path="res://Player Stuff/PlayerContoller.gd" id="1_ul7q4"]
 [ext_resource type="Texture2D" uid="uid://b8lvvprvqcbhb" path="res://Player Stuff/Animation/Anim.png" id="2_nam2j"]
 [ext_resource type="Texture2D" uid="uid://c14vqarvjf4in" path="res://TestObsticals/Wall.png" id="3_bsgji"]
+[ext_resource type="Texture2D" uid="uid://hjktynu43c1q" path="res://Player Stuff/Health/Health_Bar_Under.png" id="3_mo4hd"]
+[ext_resource type="Texture2D" uid="uid://cjx7xk3la1t25" path="res://Player Stuff/Health/Health_Bar_Progress.png" id="4_umhaq"]
+[ext_resource type="Script" path="res://HealthBar.gd" id="5_d3018"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
 radius = 50.01
@@ -14,24 +17,28 @@ size = Vector2(197.5, 102)
 
 [node name="Node2D" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "hurtTimer")]
 script = ExtResource("1_ul7q4")
-maxSpeed = 1000.0
-jumpForce = 700.0
+maxHealth = 100
+hurtBox = NodePath("CollisionShape2D")
+hurtTimer = NodePath("Timer")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("2_nam2j")
 
 [node name="PlayerCamera" type="Camera2D" parent="CharacterBody2D"]
 process_callback = 0
-position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+editor_draw_screen = false
 editor_draw_drag_margin = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_tvq21")
 one_way_collision_margin = 36.5
+
+[node name="Timer" type="Timer" parent="CharacterBody2D"]
+wait_time = 0.25
 
 [node name="Wall" type="Node2D" parent="."]
 position = Vector2(1, 223)
@@ -77,3 +84,20 @@ physics_material_override = SubResource("PhysicsMaterial_l1cun")
 shape = SubResource("RectangleShape2D_opgwy")
 one_way_collision_margin = 55.0
 debug_color = Color(0, 0.60052, 0.696994, 0.42)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+follow_viewport_enabled = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("player", "camera")]
+z_index = 1
+z_as_relative = false
+offset_left = -500.0
+offset_top = -250.0
+offset_right = -200.0
+offset_bottom = -190.0
+texture_under = ExtResource("3_mo4hd")
+texture_progress = ExtResource("4_umhaq")
+script = ExtResource("5_d3018")
+player = NodePath("../../CharacterBody2D")
+camera = NodePath("../../CharacterBody2D/PlayerCamera")
