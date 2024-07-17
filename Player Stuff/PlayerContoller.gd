@@ -31,7 +31,7 @@ func _physics_process(delta):
 	
 	
 	if !isHurt:
-		var collision: KinematicCollision2D = move_and_collide(velocity * delta)
+		var collision: KinematicCollision2D = move_and_collide(velocity * delta, true, 0.08, true)
 		if collision:
 			if collision.get_collider().name == "Enemy":
 				hurtByEnemy()
@@ -41,6 +41,7 @@ func _physics_process(delta):
 	
 #func hurtByEnemy(area):
 func hurtByEnemy():
+	print("Hit!")
 	currentHealth -= 10 #enemyDamage
 	if currentHealth < 0:
 		get_tree().change_scene_to_file("res://Menus/Death Menu/DeathMenu.tscn")
