@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bucsmlh87n4b4"]
+[gd_scene load_steps=13 format=3 uid="uid://bucsmlh87n4b4"]
 
 [ext_resource type="Script" path="res://Player Stuff/PlayerContoller.gd" id="1_ul7q4"]
 [ext_resource type="Texture2D" uid="uid://b8lvvprvqcbhb" path="res://Player Stuff/Animation/Anim.png" id="2_nam2j"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cjx7xk3la1t25" path="res://Player Stuff/Health/Health_Bar_Progress.png" id="4_umhaq"]
 [ext_resource type="Script" path="res://Player Stuff/Health/HealthBar.gd" id="5_d3018"]
 [ext_resource type="Script" path="res://Enemy.gd" id="7_soyqi"]
+[ext_resource type="Texture2D" uid="uid://cjhjy62mwqqw7" path="res://Background (Liam's)/ar.png" id="8_dj2gr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
 radius = 50.01
@@ -28,10 +29,9 @@ hurtTimer = NodePath("Timer")
 maxRollHoldDuration = 1.75
 minRollHoldDuration = 0.5
 maxRollDuration = 0.25
-rollSpeed = 5500
 groundPoundSpeed = 4000.0
 groundPoundMaxDur = 2.0
-maxSpeed = 700.0
+maxSpeed = 200.0
 acceleration = 400.0
 jumpForce = 600.0
 drag = 5.0
@@ -125,3 +125,16 @@ shape = SubResource("RectangleShape2D_p7575")
 
 [node name="Sprite2D" type="Sprite2D" parent="Enemy"]
 texture = ExtResource("3_bsgji")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_offset = Vector2(0, -100)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("8_dj2gr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(960, 0)
+texture = ExtResource("8_dj2gr")

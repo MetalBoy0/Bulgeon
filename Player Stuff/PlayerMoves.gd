@@ -8,7 +8,7 @@ var lastDir: float = 1 # The last direction the player moved, used for deciding 
 
 @export_category("Movement")
 @export var maxSpeed: float
-@export var acceleration: float 
+@export var acceleration: float
 @export var jumpForce: float
 @export var drag: float # Note: Currently drag only affects horizontal movement
 
