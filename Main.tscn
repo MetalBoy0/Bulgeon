@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://d1g7qby0j00y8" path="res://Damage/Hurtbox.tscn" id="8_f5at0"]
 [ext_resource type="PackedScene" uid="uid://bsu2j4d4eo3l8" path="res://Damage/Hitbox.tscn" id="9_cw0v6"]
 [ext_resource type="Script" path="res://Enemy2.gd" id="10_hen5y"]
+[ext_resource type="Texture2D" uid="uid://cjhjy62mwqqw7" path="res://Background (Liam's)/ar.png" id="8_dj2gr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
 radius = 50.01
@@ -35,7 +36,8 @@ size = Vector2(205, 104)
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "attackTimer")]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "hurtTimer", "attackTimer")]
+position = Vector2(-1, -1)
 unique_name_in_owner = true
 collision_layer = 2
 collision_mask = 5
@@ -44,16 +46,18 @@ maxHealth = 100
 hurtBox = NodePath("CollisionShape2D")
 receives_knocback = true
 knockback_modifier = 50.0
+hurtTimer = NodePath("HurtTimer")
 attackTimer = NodePath("AttackTimer")
 maxRollHoldDuration = 1.75
 minRollHoldDuration = 0.5
 maxRollDuration = 0.25
-rollSpeed = 10000.0
+rollSpeed = 3000.0
 groundPoundSpeed = 4000.0
 groundPoundMaxDur = 2.0
 maxSpeed = 700.0
 acceleration = 400.0
 jumpForce = 600.0
+jumpHoldDur = 0.3
 drag = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -231,3 +235,15 @@ one_shot = true
 [editable path="Enemy/Hurtbox"]
 [editable path="Enemy/Hitbox"]
 [editable path="Enemy2/Hurtbox"]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_offset = Vector2(0, -100)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("8_dj2gr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(960, 0)
+texture = ExtResource("8_dj2gr")
