@@ -2,9 +2,9 @@ extends HSlider
 
 
 @export
-var bus_name: String
+var bus_name: String # What bus is called
 
-var bus_index: int
+var bus_index: int # Current volume
 
 func _ready() -> void:
 	bus_index = AudioServer.get_bus_index(bus_name)

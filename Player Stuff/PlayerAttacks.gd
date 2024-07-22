@@ -1,6 +1,7 @@
 extends "PlayerMoves.gd"
 
 @export_category("Attacks")
+@export var attackTimer: Timer
 
 @export_group("Roll")
 @export var maxRollHoldDuration: float # The maximum duration to hold when charging a roll
@@ -23,6 +24,8 @@ var rollDirection = 0;
 var isGroundPound = false
 var currentGroundPoundDur = 0
 
+# Invincibility
+var invincible: bool = false
 
 func handle_attacks(delta: float):
 	
@@ -67,18 +70,22 @@ func handle_attacks(delta: float):
 			lastDir = rollDirection
 	
 	elif isRolling:
+		invincible = true # Make player invicible
 		# This part runs if the player is currently rolling
 		velocity.x = rollSpeed * rollDirection # Set player velocity to the roll speed
 		velocity.y = 0
 		
 		currentRollDur += delta # Update roll duration
-		
 		# If player finishes roll attack
 		if currentRollDur > finishRollDur:
 			currentRollDur = 0
 			isRolling = false
 			isDoingAttack = false
+			
 			velocity.x = 0
+			attackTimer.start() # Start Inviciblity Timer
+			await attackTimer.timeout # End Invicibility Timer
+			invincible = false # No longer Invicible
 		
 	if !isGroundPound and !isDoingAttack and !isChargingAttack:
 		
@@ -90,6 +97,7 @@ func handle_attacks(delta: float):
 	
 	elif isGroundPound:
 		# Player is currently groundpounding
+		invincible = true # Make player invicible
 		velocity.x = 0
 		velocity.y = groundPoundSpeed
 		
@@ -97,6 +105,9 @@ func handle_attacks(delta: float):
 		if currentGroundPoundDur > groundPoundMaxDur or is_on_floor():
 			isGroundPound = false
 			isDoingAttack = false
+			attackTimer.start() # Start Inviciblity Timer
+			await attackTimer.timeout # End Invicibility Timer
+			invincible = false # No longer Invicible
 		
 		currentGroundPoundDur += delta
 
@@ -106,5 +117,5 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

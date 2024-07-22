@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bucsmlh87n4b4"]
+[gd_scene load_steps=19 format=3 uid="uid://bucsmlh87n4b4"]
 
 [ext_resource type="Script" path="res://Player Stuff/PlayerContoller.gd" id="1_ul7q4"]
 [ext_resource type="Texture2D" uid="uid://b8lvvprvqcbhb" path="res://Player Stuff/Animation/Anim.png" id="2_nam2j"]
@@ -7,9 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://cjx7xk3la1t25" path="res://Player Stuff/Health/Health_Bar_Progress.png" id="4_umhaq"]
 [ext_resource type="Script" path="res://Player Stuff/Health/HealthBar.gd" id="5_d3018"]
 [ext_resource type="Script" path="res://Enemy.gd" id="7_soyqi"]
+[ext_resource type="PackedScene" uid="uid://d1g7qby0j00y8" path="res://Damage/Hurtbox.tscn" id="8_f5at0"]
+[ext_resource type="PackedScene" uid="uid://bsu2j4d4eo3l8" path="res://Damage/Hitbox.tscn" id="9_cw0v6"]
+[ext_resource type="Script" path="res://Enemy2.gd" id="10_hen5y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
 radius = 50.01
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c885r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n141u"]
+radius = 10.6019
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l1cun"]
 
@@ -19,16 +27,28 @@ size = Vector2(197.5, 102)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7575"]
 size = Vector2(20.1, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjmip"]
+size = Vector2(202, 104)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_228dq"]
+size = Vector2(205, 104)
+
 [node name="Node2D" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "hurtTimer")]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "attackTimer")]
+unique_name_in_owner = true
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_ul7q4")
 maxHealth = 100
 hurtBox = NodePath("CollisionShape2D")
-hurtTimer = NodePath("Timer")
+receives_knocback = true
+knockback_modifier = 50.0
+attackTimer = NodePath("AttackTimer")
 maxRollHoldDuration = 1.75
 minRollHoldDuration = 0.5
 maxRollDuration = 0.25
+rollSpeed = 10000.0
 groundPoundSpeed = 4000.0
 groundPoundMaxDur = 2.0
 maxSpeed = 700.0
@@ -36,22 +56,41 @@ acceleration = 400.0
 jumpForce = 600.0
 drag = 5.0
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("2_nam2j")
 
-[node name="PlayerCamera" type="Camera2D" parent="CharacterBody2D"]
+[node name="PlayerCamera" type="Camera2D" parent="Player"]
 process_callback = 0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 editor_draw_screen = false
 editor_draw_drag_margin = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("CircleShape2D_tvq21")
 one_way_collision_margin = 36.5
 
-[node name="Timer" type="Timer" parent="CharacterBody2D"]
-wait_time = 0.25
+[node name="HurtTimer" type="Timer" parent="Player"]
+wait_time = 0.5
+
+[node name="AttackTimer" type="Timer" parent="Player"]
+wait_time = 0.5
+
+[node name="Hurtbox" parent="Player" instance=ExtResource("8_f5at0")]
+collision_layer = 2
+collision_mask = 12
+
+[node name="CollisionShape2D" parent="Player/Hurtbox" index="0"]
+scale = Vector2(5, 5)
+shape = SubResource("CircleShape2D_c885r")
+
+[node name="Hitbox" parent="Player" instance=ExtResource("9_cw0v6")]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Player/Hitbox" index="0"]
+scale = Vector2(5, 5)
+shape = SubResource("CircleShape2D_n141u")
 
 [node name="Wall" type="Node2D" parent="."]
 position = Vector2(1, 223)
@@ -112,12 +151,19 @@ offset_bottom = -190.0
 texture_under = ExtResource("3_mo4hd")
 texture_progress = ExtResource("4_umhaq")
 script = ExtResource("5_d3018")
-player = NodePath("../../CharacterBody2D")
-camera = NodePath("../../CharacterBody2D/PlayerCamera")
+player = NodePath("../../Player")
+camera = NodePath("../../Player/PlayerCamera")
 
-[node name="Enemy" type="CharacterBody2D" parent="."]
+[node name="Enemy" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox")]
 position = Vector2(1000, 120)
+collision_layer = 7
 script = ExtResource("7_soyqi")
+receives_knocback = true
+knockback_modifier = 100.0
+maxHealth = 100
+hurtBox = NodePath("Hurtbox/CollisionShape2D")
+drag = 5.0
+damage = 10.0
 
 [node name="EnemyCollider" type="CollisionShape2D" parent="Enemy"]
 position = Vector2(-0.5, -7.62939e-06)
@@ -127,3 +173,61 @@ one_way_collision_margin = 24.1
 
 [node name="Sprite2D" type="Sprite2D" parent="Enemy"]
 texture = ExtResource("3_bsgji")
+
+[node name="Hurtbox" parent="Enemy" instance=ExtResource("8_f5at0")]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Enemy/Hurtbox" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_jjmip")
+
+[node name="Hitbox" parent="Enemy" instance=ExtResource("9_cw0v6")]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Enemy/Hitbox" index="0"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_228dq")
+
+[node name="Enemy2" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox")]
+position = Vector2(-1000, 120)
+collision_layer = 7
+script = ExtResource("10_hen5y")
+receives_knocback = true
+knockback_modifier = 100.0
+maxHealth = 100
+hurtBox = NodePath("Hurtbox/CollisionShape2D")
+drag = 5.0
+damage = 10.0
+
+[node name="EnemyCollider" type="CollisionShape2D" parent="Enemy2"]
+position = Vector2(-0.5, -7.62939e-06)
+scale = Vector2(10, 5)
+shape = SubResource("RectangleShape2D_p7575")
+one_way_collision_margin = 24.1
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy2"]
+texture = ExtResource("3_bsgji")
+
+[node name="Hurtbox" parent="Enemy2" instance=ExtResource("8_f5at0")]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Enemy2/Hurtbox" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_jjmip")
+
+[node name="ProjectileTimer" type="Timer" parent="Enemy2"]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
+[connection signal="area_entered" from="Enemy/Hurtbox" to="Enemy" method="_on_hurtbox_area_entered"]
+[connection signal="area_entered" from="Enemy2/Hurtbox" to="Enemy2" method="_on_hurtbox_area_entered"]
+
+[editable path="Player/Hurtbox"]
+[editable path="Player/Hitbox"]
+[editable path="Enemy/Hurtbox"]
+[editable path="Enemy/Hitbox"]
+[editable path="Enemy2/Hurtbox"]

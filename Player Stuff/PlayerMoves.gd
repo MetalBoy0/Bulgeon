@@ -5,6 +5,7 @@ var isMoving: bool = false
 var isChargingAttack: bool = false # Is player charging up an attack
 var isDoingAttack: bool = false
 var lastDir: float = 1 # The last direction the player moved, used for deciding which way to roll
+@onready var player = %Player
 
 @export_category("Movement")
 @export var maxSpeed: float
@@ -24,13 +25,16 @@ func handle_move(delta):
 		var direction = Input.get_axis("move_left","move_right")
 		
 		# If the player is pressing move_left or move_right buttons
-		if direction:
-			# Update velocity
-			# Move toward increments the velocity by acceleration while also maxing it at maxSpeed
-			velocity.x = direction*min(maxSpeed, abs(velocity.x)+acceleration)
-			# Update last dir variable
-			isMoving = true
-			lastDir = direction
+		if !player.isHurt:
+			if direction:
+				# Update velocity
+				# Move toward increments the velocity by acceleration while also maxing it at maxSpeed
+				velocity.x = direction*min(maxSpeed, abs(velocity.x)+acceleration)
+				# Update last dir variable
+				isMoving = true
+				lastDir = direction
+			else:
+				isMoving = false
 		else:
 			isMoving = false
 		
@@ -44,5 +48,5 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass

@@ -9,10 +9,12 @@ var EnemyCollison: bool = false
 @onready var currentHealth: int = maxHealth
 @export var hurtBox: CollisionShape2D
 @export var drag: float # Note: Currently drag only affects horizontal movement
+@export var Projectile: PackedScene = preload("res://Damage/Projectile.tscn")
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 @export var damage: float
+@onready var projectileTimer = $ProjectileTimer
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -34,7 +36,22 @@ func _physics_process(delta):
 		#velocity.x = 100
 	#elif position.x > -1000:
 		#velocity.x = -100
+	#projectileTimer.start() #Start timer where no damage can occur
+	#await projectileTimer.timeout #When timer ends
+	if (projectileTimer.is_stopped()):
+		var projectile_direction = global_position.direction_to(player.global_position)
+		throw_projectile(projectile_direction)
 	move_and_slide()
+	
+func throw_projectile(projectile_direction: Vector2):
+	if Projectile:
+		var projectile = Projectile.instantiate()
+		get_tree().current_scene.add_child(projectile)
+		projectile.global_position = global_position
+		
+		var projectile_rotation = projectile_direction.angle()
+		projectile.rotation = projectile_rotation
+		projectileTimer.start() #Start timer where no damage can occur
 func receive_damage(base_damage: int):
 	var actual_damage = base_damage
 	actual_damage -= defense
