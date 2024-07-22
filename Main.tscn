@@ -23,18 +23,21 @@ size = Vector2(20.1, 20)
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "hurtTimer")]
+position = Vector2(-1, -1)
 script = ExtResource("1_ul7q4")
 maxHealth = 100
 hurtBox = NodePath("CollisionShape2D")
-hurtTimer = NodePath("Timer")
+hurtTimer = NodePath("HurtTimer")
 maxRollHoldDuration = 1.75
 minRollHoldDuration = 0.5
 maxRollDuration = 0.25
+rollSpeed = 3000.0
 groundPoundSpeed = 4000.0
 groundPoundMaxDur = 2.0
-maxSpeed = 200.0
+maxSpeed = 700.0
 acceleration = 400.0
 jumpForce = 600.0
+jumpHoldDur = 0.3
 drag = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -51,7 +54,7 @@ editor_draw_drag_margin = true
 shape = SubResource("CircleShape2D_tvq21")
 one_way_collision_margin = 36.5
 
-[node name="Timer" type="Timer" parent="Player"]
+[node name="HurtTimer" type="Timer" parent="Player"]
 wait_time = 0.25
 
 [node name="Wall" type="Node2D" parent="."]

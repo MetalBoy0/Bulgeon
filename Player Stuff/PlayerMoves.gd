@@ -10,7 +10,10 @@ var lastDir: float = 1 # The last direction the player moved, used for deciding 
 @export var maxSpeed: float
 @export var acceleration: float
 @export var jumpForce: float
+@export var jumpHoldDur: float
 @export var drag: float # Note: Currently drag only affects horizontal movement
+
+var jumpCurrentHold=0.0
 
 func handle_move(delta):
 	# Prevent player from moving when charging an attack or preforming an attack
@@ -35,8 +38,14 @@ func handle_move(delta):
 			isMoving = false
 		
 		# Player jump
-		if Input.is_action_pressed("jump") and is_on_floor():
-			velocity.y -= jumpForce
+		# Applies jump force until player releases or the jump hold excedes the max hold
+		# (Jump hold is how long you can hold the jump button and it will keep applying the jump velocity and increasing it)
+		if Input.is_action_pressed("jump"):
+			if is_on_floor() or (jumpCurrentHold!=0 and jumpCurrentHold<jumpHoldDur):
+				velocity.y = -jumpForce
+				jumpCurrentHold += delta
+		else:
+			jumpCurrentHold = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
