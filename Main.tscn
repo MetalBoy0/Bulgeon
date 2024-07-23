@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bucsmlh87n4b4"]
+[gd_scene load_steps=20 format=3 uid="uid://bucsmlh87n4b4"]
 
 [ext_resource type="Script" path="res://Player Stuff/PlayerContoller.gd" id="1_ul7q4"]
 [ext_resource type="Texture2D" uid="uid://b8lvvprvqcbhb" path="res://Player Stuff/Animation/Anim.png" id="2_nam2j"]
@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://cjx7xk3la1t25" path="res://Player Stuff/Health/Health_Bar_Progress.png" id="4_umhaq"]
 [ext_resource type="Script" path="res://Player Stuff/Health/HealthBar.gd" id="5_d3018"]
 [ext_resource type="Script" path="res://Enemy.gd" id="7_soyqi"]
+[ext_resource type="Texture2D" uid="uid://cjhjy62mwqqw7" path="res://Background (Liam's)/ar.png" id="8_dj2gr"]
 [ext_resource type="PackedScene" uid="uid://d1g7qby0j00y8" path="res://Damage/Hurtbox.tscn" id="8_f5at0"]
 [ext_resource type="PackedScene" uid="uid://bsu2j4d4eo3l8" path="res://Damage/Hitbox.tscn" id="9_cw0v6"]
 [ext_resource type="Script" path="res://Enemy2.gd" id="10_hen5y"]
-[ext_resource type="Texture2D" uid="uid://cjhjy62mwqqw7" path="res://Background (Liam's)/ar.png" id="8_dj2gr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tvq21"]
 radius = 50.01
@@ -36,9 +36,9 @@ size = Vector2(205, 104)
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "hurtTimer", "attackTimer")]
-position = Vector2(-1, -1)
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("hurtBox", "attackTimer")]
 unique_name_in_owner = true
+position = Vector2(-1, -1)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_ul7q4")
@@ -46,7 +46,6 @@ maxHealth = 100
 hurtBox = NodePath("CollisionShape2D")
 receives_knocback = true
 knockback_modifier = 50.0
-hurtTimer = NodePath("HurtTimer")
 attackTimer = NodePath("AttackTimer")
 maxRollHoldDuration = 1.75
 minRollHoldDuration = 0.5
@@ -54,6 +53,7 @@ maxRollDuration = 0.25
 rollSpeed = 3000.0
 groundPoundSpeed = 4000.0
 groundPoundMaxDur = 2.0
+groundPoundCooldown = 0.5
 maxSpeed = 700.0
 acceleration = 400.0
 jumpForce = 600.0
@@ -226,15 +226,6 @@ shape = SubResource("RectangleShape2D_jjmip")
 wait_time = 2.0
 one_shot = true
 
-[connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
-[connection signal="area_entered" from="Enemy/Hurtbox" to="Enemy" method="_on_hurtbox_area_entered"]
-[connection signal="area_entered" from="Enemy2/Hurtbox" to="Enemy2" method="_on_hurtbox_area_entered"]
-
-[editable path="Player/Hurtbox"]
-[editable path="Player/Hitbox"]
-[editable path="Enemy/Hurtbox"]
-[editable path="Enemy/Hitbox"]
-[editable path="Enemy2/Hurtbox"]
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -247,3 +238,13 @@ texture = ExtResource("8_dj2gr")
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(960, 0)
 texture = ExtResource("8_dj2gr")
+
+[connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
+[connection signal="area_entered" from="Enemy/Hurtbox" to="Enemy" method="_on_hurtbox_area_entered"]
+[connection signal="area_entered" from="Enemy2/Hurtbox" to="Enemy2" method="_on_hurtbox_area_entered"]
+
+[editable path="Player/Hurtbox"]
+[editable path="Player/Hitbox"]
+[editable path="Enemy/Hurtbox"]
+[editable path="Enemy/Hitbox"]
+[editable path="Enemy2/Hurtbox"]

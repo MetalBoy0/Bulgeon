@@ -67,7 +67,7 @@ func _on_hurtbox_area_entered(hitbox):
 	if hitbox.is_in_group("Projectile"):
 		hitbox.destroy()
 	if !isHurt:
-		if !invincible:
+		if !invincible or hitbox.is_in_group("Projectile"):
 			var actual_damage = receive_damage(hitbox.damage)
 			if currentHealth == 0: # If health is equals 0
 				get_tree().change_scene_to_file('res://Menus/Death Menu/DeathMenu.tscn') #Go to death screen if die

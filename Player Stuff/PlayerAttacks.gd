@@ -12,6 +12,7 @@ extends "PlayerMoves.gd"
 @export_group("Groundpound")
 @export var groundPoundSpeed: float
 @export var groundPoundMaxDur: float
+@export var groundPoundCooldown: float
 
 # Roll information
 var isRolling: bool = false
@@ -23,6 +24,7 @@ var rollDirection = 0;
 # Groundpound information
 var isGroundPound = false
 var currentGroundPoundDur = 0
+var currentGroundPoundCooldown = 0.0
 
 # Invincibility
 var invincible: bool = false
@@ -90,7 +92,7 @@ func handle_attacks(delta: float):
 	if !isGroundPound and !isDoingAttack and !isChargingAttack:
 		
 		# Activate groundpound if the player is in the air and not already performing an attack
-		if Input.is_action_just_pressed("groundpound_attack") and !is_on_floor():
+		if Input.is_action_just_pressed("groundpound_attack") and !is_on_floor() and currentGroundPoundCooldown <= 0:
 			isGroundPound = true
 			isDoingAttack = true
 			currentGroundPoundDur = 0
@@ -105,11 +107,18 @@ func handle_attacks(delta: float):
 		if currentGroundPoundDur > groundPoundMaxDur or is_on_floor():
 			isGroundPound = false
 			isDoingAttack = false
+			currentGroundPoundCooldown = groundPoundCooldown
 			attackTimer.start() # Start Inviciblity Timer
 			await attackTimer.timeout # End Invicibility Timer
 			invincible = false # No longer Invicible
 		
 		currentGroundPoundDur += delta
+	
+	
+	# Cooldown stuff
+	if currentGroundPoundCooldown > 0:
+		print(currentGroundPoundCooldown)
+		currentGroundPoundCooldown-=delta
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
