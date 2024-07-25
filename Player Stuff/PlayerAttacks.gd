@@ -117,7 +117,7 @@ func handle_attacks(delta: float):
 	
 	# Cooldown stuff
 	if currentGroundPoundCooldown > 0:
-		print(currentGroundPoundCooldown)
+		#print(currentGroundPoundCooldown)
 		currentGroundPoundCooldown-=delta
 
 # Called when the node enters the scene tree for the first time.

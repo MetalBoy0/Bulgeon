@@ -36,8 +36,6 @@ func _physics_process(delta):
 		#velocity.x = 100
 	#elif position.x > -1000:
 		#velocity.x = -100
-	#projectileTimer.start() #Start timer where no damage can occur
-	#await projectileTimer.timeout #When timer ends
 	if (projectileTimer.is_stopped()):
 		var projectile_direction = global_position.direction_to(player.global_position)
 		throw_projectile(projectile_direction)
@@ -69,9 +67,9 @@ func receive_knockback(damage_source_pos: Vector2, received_damage: int):
 func _on_hurtbox_area_entered(hitbox):
 	if player.invincible:
 		var actual_damage = receive_damage(hitbox.damage)
-		print(currentHealth)
+		#print(currentHealth)
 		if currentHealth == 0: # If health is equals 0
 			currentHealth = maxHealth
-			position = Vector2(0,0)
+			position = Vector2(-1000,0)
 			velocity = Vector2(0,0)
 		receive_knockback(hitbox.global_position, actual_damage)

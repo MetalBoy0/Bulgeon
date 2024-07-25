@@ -17,6 +17,8 @@ var lastDir: float = 1 # The last direction the player moved, used for deciding 
 var jumpCurrentHold=0.0
 
 func handle_move(delta):
+	if !isMoving:
+		velocity.x /= (1+drag*delta)
 	# Prevent player from moving when charging an attack or preforming an attack
 	if !isChargingAttack and !isDoingAttack:
 		# Apply drag only if the player isn't pressing move buttons

@@ -47,9 +47,9 @@ hurtBox = NodePath("CollisionShape2D")
 receives_knocback = true
 knockback_modifier = 50.0
 attackTimer = NodePath("AttackTimer")
-maxRollHoldDuration = 1.75
-minRollHoldDuration = 0.5
-maxRollDuration = 0.25
+maxRollHoldDuration = 1.25
+minRollHoldDuration = 0.25
+maxRollDuration = 0.5
 rollSpeed = 3000.0
 groundPoundSpeed = 4000.0
 groundPoundMaxDur = 2.0
@@ -104,6 +104,7 @@ scale = Vector2(27.96, 1)
 texture = ExtResource("3_bsgji")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
+collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_l1cun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
@@ -119,6 +120,7 @@ scale = Vector2(4.08, 1)
 texture = ExtResource("3_bsgji")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Wall2"]
+collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_l1cun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
@@ -134,6 +136,7 @@ scale = Vector2(16.6464, 1)
 texture = ExtResource("3_bsgji")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Wall3"]
+collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_l1cun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3/StaticBody2D"]
@@ -164,9 +167,11 @@ collision_layer = 7
 script = ExtResource("7_soyqi")
 receives_knocback = true
 knockback_modifier = 100.0
-maxHealth = 100
+maxHealth = 20
 hurtBox = NodePath("Hurtbox/CollisionShape2D")
 drag = 5.0
+maxSpeed = 100.0
+acceleration = 100.0
 damage = 10.0
 
 [node name="EnemyCollider" type="CollisionShape2D" parent="Enemy"]
@@ -200,7 +205,7 @@ collision_layer = 7
 script = ExtResource("10_hen5y")
 receives_knocback = true
 knockback_modifier = 100.0
-maxHealth = 100
+maxHealth = 10
 hurtBox = NodePath("Hurtbox/CollisionShape2D")
 drag = 5.0
 damage = 10.0

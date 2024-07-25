@@ -9,6 +9,8 @@ var EnemyCollison: bool = false
 @onready var currentHealth: int = maxHealth
 @export var hurtBox: CollisionShape2D
 @export var drag: float # Note: Currently drag only affects horizontal movement
+@export var maxSpeed: float
+@export var acceleration: float
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -34,6 +36,8 @@ func _physics_process(delta):
 		#velocity.x = 100
 	#elif position.x > -1000:
 		#velocity.x = -100
+	var direction = global_position.direction_to(player.global_position).x
+	velocity.x = direction*min(maxSpeed, abs(velocity.x)+acceleration)
 	move_and_slide()
 func receive_damage(base_damage: int):
 	var actual_damage = base_damage
@@ -52,7 +56,7 @@ func receive_knockback(damage_source_pos: Vector2, received_damage: int):
 func _on_hurtbox_area_entered(hitbox):
 	if player.invincible:
 		var actual_damage = receive_damage(hitbox.damage)
-		print(currentHealth)
+		#print(currentHealth)
 		if currentHealth == 0: # If health is equals 0
 			currentHealth = maxHealth
 			position = Vector2(0,0)
